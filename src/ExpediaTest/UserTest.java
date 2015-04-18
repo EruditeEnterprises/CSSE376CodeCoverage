@@ -112,6 +112,7 @@ public class UserTest
 		target.bookWithDoubleMiles(new Booking[]{flight});
 		Assert.assertEquals(4999, target.bonusFrequentFlierMiles, 0.01);
 	}
+	
 	@Test
 	public void TestThatDiscountInitializes()
 	{
@@ -120,12 +121,25 @@ public class UserTest
 	this.target.book(new Booking[]{new Flight(StartDate, EndDate, 100), new Hotel(5), new Car(3)});
 	assertEquals(1024.65,this.target.Price(), 0.01);
 	}
-
-
+	
+	@Test
+	public void TestGetDiscount()
+	{
+		ServiceLocator.Instance().AddDiscount(new Discount(0,100000));
+		ServiceLocator.Instance().AddDiscount(new Discount(1,100000));
+		ServiceLocator.Instance().AddDiscount(new Discount(0,0));
+		ServiceLocator.Instance().AddDiscount(new Discount(1,0));
+		
+		Flight flight = new Flight(StartDate, EndDate, 100);
+		this.target.book(new Booking[]{flight});
+		this.target.Price();
+		assertEquals(0,this.target.Price(), 0.01);
+	}
 	
 	@After
 	public void TearDown()
 	{
 		target = null; // this is entirely unnecessary.. but I'm just showing a usage of the TearDown method here
+		ServiceLocator.Instance().AvailableDiscounts().clear();
 	}
 }
