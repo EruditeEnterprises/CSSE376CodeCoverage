@@ -1,17 +1,21 @@
 package ExpediaTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import Expedia.*;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import Expedia.Booking;
+import Expedia.Car;
+import Expedia.Discount;
+import Expedia.Flight;
+import Expedia.Hotel;
+import Expedia.ServiceLocator;
+import Expedia.User;
 public class UserTest
 {	
 	private User target;
@@ -98,7 +102,18 @@ public class UserTest
 		Flight flight = new Flight(StartDate, EndDate, 10000);
 		target.bookWithDoubleMiles(new Booking[]{flight});
 		Assert.assertEquals(5000, target.bonusFrequentFlierMiles, 0.01);
+		target.bookWithDoubleMiles(new Booking[]{car});
+		Assert.assertEquals(5005, target.bonusFrequentFlierMiles, 0.01);
 	}
+	@Test
+	public void TestThatDiscountInitializes()
+	{
+	Discount target = new Discount(0.01, 1);
+	ServiceLocator.Instance().AddDiscount(target);
+	this.target.book(new Booking[]{new Flight(StartDate, EndDate, 100), new Hotel(5), new Car(3)});
+	assertEquals(1024.65,this.target.Price(), 0.01);
+	}
+
 
 	
 	@After
