@@ -1,8 +1,5 @@
 package ExpediaTest;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,6 +84,59 @@ public class HotelTest
         //mocks.VerifyAll();
         EasyMock.verify(mockDB);
     }
+	@Test
+	public void TestThatInitializerThrowsException()
+	{
+		boolean throwsException;
+		try
+		{
+			new Hotel(-3);
+			throwsException = false;
+		}
+		catch(RuntimeException e)
+		{
+			throwsException = true;
+		}
+		Assert.assertTrue(throwsException);
+	}
+	@Test
+	public void TestGetMiles()
+	{
+		Hotel target = new Hotel(10);
+		Assert.assertEquals(0, target.getMiles());
+	}
+	@Test
+	public void TestThatAvailableRoomsThrowsException()
+	{
+		Hotel target = new Hotel(10);
+		boolean throwsException;
+		try
+		{
+			target.AvailableRooms();
+			throwsException = false;
+		}
+		catch(NullPointerException e)
+		{
+			throwsException = true;
+		}
+		Assert.assertTrue(throwsException);
+	}
+	@Test
+	public void TestThatGetRoomOccupantThrowsException()
+	{
+		Hotel target = new Hotel(10);
+		boolean throwsException;
+		try
+		{
+			target.getRoomOccupant(10);
+			throwsException = false;
+		}
+		catch(NullPointerException e)
+		{
+			throwsException = true;
+		}
+		Assert.assertTrue(throwsException);
+	}
 //    @Test
 //    public void TestThatHotelDoesGetRoomCountFromDatabase()
 //    {

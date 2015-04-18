@@ -1,18 +1,13 @@
 package ExpediaTest;
 
-import static org.junit.Assert.*;
-
-import java.time.Instant;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import Expedia.*;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import Expedia.Flight;
 public class FlightTest {
 	private Flight targetFlight;
 	private final Date StartDate = new Date(2009, 11, 1);
@@ -72,6 +67,20 @@ public class FlightTest {
 	{
 		Flight target = new Flight(new Date(2015,1,1), new Date(2015,1,6), 0);
 		Assert.assertEquals(300, target.getBasePrice(), 0.0001);
+	}
+	
+	@Test
+	public void TestNumberOfPassengers(){
+		Flight target = new Flight(new Date(2015,1,1), new Date(2015,1,2), 0);
+		Boolean throwsException;
+		try{
+			target.NumberOfPassengers();
+			throwsException = false;
+		}
+		catch(NullPointerException e){
+			throwsException = true;
+		}
+		Assert.assertTrue(throwsException);
 	}
 	
 	/*@Test
